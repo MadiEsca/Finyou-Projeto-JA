@@ -9,7 +9,8 @@
       <img src="{% static "/images/Logo_Finyou.png" %}" alt="Logo FinYou" class="cadastro-logo" />
 
       <h2>Criar nova conta</h2>
-      <p>Preencha os campos abaixo para se cadastrar na FinYou.</p>
+      <p> {{ mensagem_2 }} </p>
+      {% comment %} <p>Preencha os campos abaixo para se cadastrar na FinYou.</p> {% endcomment %}
 
       <form class="cadastro-form" method="POST" action="{% url "rota_criarConta" %}" >
         {% csrf_token %}

@@ -1,23 +1,102 @@
-{% extends "template.html" %}
-{% block conteudo %}
-{% block titulo %}Pagamento{% endblock titulo %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block titulo %}{% endblock titulo %}</title>
+  <link rel="stylesheet" href="{% static 'styles/estilizacao.css' %}" />
+  <link rel="icon" type="image/png" href="{% static '/images/Logo_Finyou.png' %}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <div class="pagamentos">
-        <h2>Pagamento</h2>
-        <form action="processar_pagamento.php" method="POST">
-            <label for="nome">Nome no Cartão:</label>
-            <input type="text" id="nome" name="nome" required><br><br>
 
-            <label for="numero">Número do Cartão:</label>
-            <input type="text" id="numero" name="numero" required><br><br>
+ <style>
+        .finyou-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            color: #1a1a1a;
+        }
 
-            <label for="validade">Validade (MM/AA):</label>
-            <input type="text" id="validade" name="validade" required><br><br>
+        .finyou-container h1 {
+            font-size: 2rem;
+            margin-bottom: 0.3rem;
+            margin-top: 1rem;
+        }
 
-            <label for="cvv">CVV:</label>
-            <input type="text" id="cvv" name="cvv" required><br><br>
+        .finyou-container p {
+            color: #333;
+            max-width: 600px;
+            margin: 0 0 2rem 0;
+        }
 
-            <button type="submit">Pagar Agora</button><br>
-        </form>
+        .finyou-container img {
+            width: 600px;
+            max-width: 80%;
+        }
+    </style>
+</head>
+<body>
+  
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="logo">
+      <img src="{% static "/images/Logo_Finyou.png" %}" alt="FinYou Logo" />
+      <h1>FinYou</h1>
     </div>
-{% endblock conteudo %}
+
+      <!--VERIFICAR SE O USUÁRIO ESTÁ CADASTRADO-->
+      <nav class="nav navbar">
+        <ul>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'rota_home' %}">Início</a></li>
+          <li><a href="{% url 'rota_home' %}">Sobre</a></li>
+          <li><a href="{% url 'rota_home' %}">Serviços</a></li>
+          <li><a href="{% url 'rota_home' %}">Planos</a></li>
+          <li><a href="{% url 'rota_home' %}">Contato</a></li>
+          <li><a href="{% url "rota_dashboard" %}">Dashboard</a></li>
+          <li><a href="{% url "rota_logout" %}">logout</a></li>
+          <li>
+            <a> seja bem vindo, {{ user.username }}! </a>
+          </li>
+          {% else %}
+          <li><a href="{% url 'rota_home' %}">Início</a></li>
+          <li><a href="{% url 'rota_home' %}">Sobre</a></li>
+          <li><a href="{% url 'rota_home' %}">Serviços</a></li>
+          <li><a href="{% url 'rota_home' %}">Planos</a></li>
+          <li><a href="{% url 'rota_home' %}">Contato</a></li>
+          <li><a href="{% url "rota_login" %}">Login</a></li>
+          <li>
+            <p> Que tal se cadastrar </p>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </header> 
+    
+<!-- ===== Conteúdo carregado dinamicamente ===== -->
+
+<div class="finyou-container">
+    <h1>Ainda estamos em desenvolvimento</h1>
+    <p>Nos ajude a continuar com esse projeto e consequentemente fazer mais pelo nosso mundo</p>
+    <img src=" {% static "/images/Logo_Finyou.png" %} " alt="">
+</div>
+
+
+<!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 FinYou - Todos os direitos reservados.</p>
+    <div class="redes-sociais">
+      <img src="{% static "images/Logo_Facebook.png" %}" alt="Facebook">
+      <img src="{% static "images/Logo_Instagram.png" %}" alt="Instagram">
+      <img src="{% static "images/Logo_LinkedIn.png" %}" alt="LinkedIn">
+    </div>
+  </footer>
+</body>
+</html>

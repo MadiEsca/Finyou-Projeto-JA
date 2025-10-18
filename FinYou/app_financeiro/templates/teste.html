@@ -1,37 +1,440 @@
-{% extends "template.html" %}
+{% extends 'template.html' %}
+{% load static %}
 
-{% block content %}
+{% block titulo %}Dashboard de Investimentos{% endblock titulo %}
 
-  {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
-  {% endif %}
+{% block conteudo %}
+<div class="dashboard-container">
+    <h1 class="dashboard-title">Meus Investimentos ›</h1>
+    
+    <div class="main-grid">
+        <!-- Gráfico Principal - Evolução do Patrimônio -->
+        <div class="main-chart-container">
+            <div class="chart-header">
+                <div class="chart-icon-wrapper">
+                    <span class="portfolio-icon">💰</span>
+                </div>
+                <div class="chart-info">
+                    <div class="chart-title-row">
+                        <span class="chart-name">Patrimônio Total</span>
+                        <span class="badge">Últimos 12 meses</span>
+                        <span class="info-icon">ⓘ</span>
+                    </div>
+                    <div class="chart-value-row">
+                        <span class="chart-value">R$ 487.650,00</span>
+                        <span class="chart-change positive">+18,5%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="portfolioChart"></canvas>
+            </div>
+        </div>
 
-  {% if next %}
-    {% if user.is_authenticated %}
-      <p>Your account doesn't have access to this page. To proceed,
-      please login with an account that has access.</p>
-    {% else %}
-      <p>Please login to see this page.</p>
-    {% endif %}
-  {% endif %}
+        <!-- Sidebar - Distribuição por Categoria -->
+        <div class="indices-sidebar">
+            <h3 class="sidebar-title">Distribuição de Ativos</h3>
+            <div class="indices-list">
+                <div class="index-item">
+                    <div class="index-icon blue">RF</div>
+                    <div class="index-info">
+                        <div class="index-name">Renda Fixa</div>
+                        <div class="index-code">Tesouro, CDB, LCI</div>
+                    </div>
+                    <div class="index-values">
+                        <div class="index-value">R$ 195.060</div>
+                        <div class="index-change positive">40,0%</div>
+                    </div>
+                </div>
 
-  <form method="post">
-    {% csrf_token %}
-    <table>
-      <tr>
-        <td>{{ form.username.label_tag }}</td>
-        <td>{{ form.username }}</td>
-      </tr>
-      <tr>
-        <td>{{ form.password.label_tag }}</td>
-        <td>{{ form.password }}</td>
-      </tr>
-    </table>
-    <input type="submit" value="login" />
-    <input type="hidden" name="next" value="{{ next }}" />
-  </form>
+                <div class="index-item">
+                    <div class="index-icon red">AÇ</div>
+                    <div class="index-info">
+                        <div class="index-name">Ações</div>
+                        <div class="index-code">Ações Nacionais</div>
+                    </div>
+                    <div class="index-values">
+                        <div class="index-value">R$ 136.709</div>
+                        <div class="index-change positive">28,0%</div>
+                    </div>
+                </div>
 
-  {# Assumes you setup the password_reset view in your URLconf #}
-  <p><a href="#">Lost password?</a></p>
+                <div class="index-item">
+                    <div class="index-icon cyan">FI</div>
+                    <div class="index-info">
+                        <div class="index-name">Fundos Imobiliários</div>
+                        <div class="index-code">FIIs</div>
+                    </div>
+                    <div class="index-values">
+                        <div class="index-value">R$ 73.147</div>
+                        <div class="index-change positive">15,0%</div>
+                    </div>
+                </div>
 
-{% endblock %}
+                <div class="index-item">
+                    <div class="index-icon navy">CR</div>
+                    <div class="index-info">
+                        <div class="index-name">Criptomoedas</div>
+                        <div class="index-code">BTC, ETH</div>
+                    </div>
+                    <div class="index-values">
+                        <div class="index-value">R$ 48.765</div>
+                        <div class="index-change positive">10,0%</div>
+                    </div>
+                </div>
+
+                <div class="index-item">
+                    <div class="index-icon dark-blue">EX</div>
+                    <div class="index-info">
+                        <div class="index-name">Ações Internacionais</div>
+                        <div class="index-code">ETFs, Stocks</div>
+                    </div>
+                    <div class="index-values">
+                        <div class="index-value">R$ 24.382</div>
+                        <div class="index-change positive">5,0%</div>
+                    </div>
+                </div>
+
+                <div class="index-item">
+                    <div class="index-icon purple">RE</div>
+                    <div class="index-info">
+                        <div class="index-name">Reserva de Emergência</div>
+                        <div class="index-code">Liquidez Diária</div>
+                    </div>
+                    <div class="index-values">
+                        <div class="index-value">R$ 9.587</div>
+                        <div class="index-change positive">2,0%</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="view-more">Ver detalhes de cada ativo ›</a>
+        </div>
+    </div>
+
+    <!-- Cards Inferiores -->
+    <div class="bottom-grid">
+        <!-- Rentabilidade por Categoria -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon crypto">📊</div>
+                <div class="card-title-group">
+                    <span class="card-title">Rentabilidade por Categoria</span>
+                    <span class="info-icon">ⓘ</span>
+                </div>
+            </div>
+            <div class="card-stats">
+                <span class="card-value">Últimos 12 meses</span>
+            </div>
+            <div class="chart-mini-wrapper">
+                <canvas id="rentabilityChart"></canvas>
+            </div>
+            <div class="crypto-dominance">
+                <h4>Maiores Ganhos</h4>
+                <div class="crypto-list">
+                    <div class="crypto-item">
+                        <div class="crypto-icon" style="background: #f7931a;">₿</div>
+                        <div class="crypto-info">
+                            <div class="crypto-name">Bitcoin</div>
+                            <div class="crypto-code">0.5 BTC</div>
+                        </div>
+                        <div class="crypto-values">
+                            <div class="crypto-value">R$ 27.800</div>
+                            <div class="crypto-change positive">+45,2%</div>
+                        </div>
+                    </div>
+                    <div class="crypto-item">
+                        <div class="crypto-icon" style="background: #00c853;">📈</div>
+                        <div class="crypto-info">
+                            <div class="crypto-name">PETR4</div>
+                            <div class="crypto-code">500 ações</div>
+                        </div>
+                        <div class="crypto-values">
+                            <div class="crypto-value">R$ 18.500</div>
+                            <div class="crypto-change positive">+32,8%</div>
+                        </div>
+                    </div>
+                    <div class="crypto-item">
+                        <div class="crypto-icon" style="background: #627eea;">Ξ</div>
+                        <div class="crypto-info">
+                            <div class="crypto-name">Ethereum</div>
+                            <div class="crypto-code">5 ETH</div>
+                        </div>
+                        <div class="crypto-values">
+                            <div class="crypto-value">R$ 20.965</div>
+                            <div class="crypto-change positive">+28,4%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="card-link">Ver todos os ativos ›</a>
+        </div>
+
+        <!-- Aportes e Retiradas -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon usd">💵</div>
+                <div class="card-title-group">
+                    <span class="card-title">Movimentações Mensais</span>
+                    <span class="info-icon">ⓘ</span>
+                </div>
+            </div>
+            <div class="card-stats">
+                <span class="card-value">Aporte médio: R$ 5.200</span>
+            </div>
+            <div class="chart-mini-wrapper">
+                <canvas id="contributionsChart"></canvas>
+            </div>
+
+            <div class="commodities-section">
+                <h4 style="margin-bottom: 12px; font-size: 0.85rem; font-weight: 600;">Próximos Vencimentos</h4>
+                <div class="commodity-item">
+                    <div class="commodity-icon" style="background: #0e74ff;">📅</div>
+                    <div class="commodity-info">
+                        <div class="commodity-name">Tesouro Selic 2027</div>
+                        <div class="commodity-code">Vencimento</div>
+                    </div>
+                    <div class="commodity-values">
+                        <div class="commodity-value">15/03/2027</div>
+                        <div class="commodity-change positive">R$ 35.000</div>
+                    </div>
+                </div>
+
+                <div class="commodity-item">
+                    <div class="commodity-icon" style="background: #00c853;">📅</div>
+                    <div class="commodity-info">
+                        <div class="commodity-name">CDB Banco XYZ</div>
+                        <div class="commodity-code">Vencimento</div>
+                    </div>
+                    <div class="commodity-values">
+                        <div class="commodity-value">20/08/2026</div>
+                        <div class="commodity-change positive">R$ 50.000</div>
+                    </div>
+                </div>
+
+                <div class="commodity-item">
+                    <div class="commodity-icon" style="background: #ff9800;">📅</div>
+                    <div class="commodity-info">
+                        <div class="commodity-name">LCI Imóveis</div>
+                        <div class="commodity-code">Vencimento</div>
+                    </div>
+                    <div class="commodity-values">
+                        <div class="commodity-value">10/11/2025</div>
+                        <div class="commodity-change positive">R$ 28.500</div>
+                    </div>
+                </div>
+
+                <div class="commodity-item">
+                    <div class="commodity-icon" style="background: #9c27b0;">📅</div>
+                    <div class="commodity-info">
+                        <div class="commodity-name">Tesouro IPCA+ 2030</div>
+                        <div class="commodity-code">Vencimento</div>
+                    </div>
+                    <div class="commodity-values">
+                        <div class="commodity-value">15/05/2030</div>
+                        <div class="commodity-change positive">R$ 42.000</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="card-link">Ver todos os vencimentos ›</a>
+        </div>
+
+        <!-- Notificações e Alertas -->
+        <div class="notifications-section">
+            <h3>Notificações e Alertas</h3>
+            <div class="notification-item">
+                <div class="notification-icon alert">!</div>
+                <div class="notification-content">
+                    <div class="notification-title">Atenção: Vencimento Próximo</div>
+                    <div class="notification-text">Seu CDB Banco XYZ vence em 30 dias. Considere reinvestir.</div>
+                </div>
+                <div class="notification-time">2 min atrás</div>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon info">i</div>
+                <div class="notification-content">
+                    <div class="notification-title">Nova Análise de Mercado</div>
+                    <div class="notification-text">Confira as últimas tendências para criptomoedas.</div>
+                </div>
+                <div class="notification-time">1 hora atrás</div>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon success">✓</div>
+                <div class="notification-content">
+                    <div class="notification-title">Aporte Realizado com Sucesso</div>
+                    <div class="notification-text">Seu aporte de R$ 2.500 em Renda Fixa foi processado.</div>
+                </div>
+                <div class="notification-time">Ontem</div>
+            </div>
+            <a href="#" class="card-link">Ver todas as notificações ›</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Dados de exemplo para o gráfico de patrimônio
+    const portfolioData = {
+        labels: [\'Jan\', \'Fev\', \'Mar\', \'Abr\', \'Mai\', \'Jun\', \'Jul\', \'Ago\', \'Set\', \'Out\', \'Nov\', \'Dez\'],
+        datasets: [{
+            label: \'Patrimônio (R$)\',
+            data: [400000, 410000, 425000, 430000, 445000, 450000, 460000, 470000, 475000, 480000, 485000, 487650],
+            borderColor: \'#0e74ff\',
+            backgroundColor: \'rgba(14, 116, 255, 0.1)\',
+            fill: true,
+            tension: 0.4
+        }]
+    };
+
+    // Configurações do gráfico de patrimônio
+    const portfolioConfig = {
+        type: \'line\',
+        data: portfolioData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    mode: \'index\',
+                    intersect: false,
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    beginAtZero: false,
+                    grid: {
+                        color: \'#e0e0e0\'
+                    }
+                }
+            }
+        }
+    };
+
+    // Renderizar o gráfico de patrimônio
+    const portfolioChart = new Chart(
+        document.getElementById(\'portfolioChart\'),
+        portfolioConfig
+    );
+
+    // Dados de exemplo para o gráfico de rentabilidade por categoria (mini gráfico)
+    const rentabilityData = {
+        labels: [\'RF\', \'Ações\', \'FIIs\', \'Cripto\', \'Internacionais\'],
+        datasets: [{
+            label: \'Rentabilidade (%)\',
+            data: [12, 25, 8, 40, 15],
+            backgroundColor: [\'#2196f3\', \'#f44336\', \'#00bcd4\', \'#1a3c8d\', \'#0d47a1\'],
+            borderColor: \'#fff\',
+            borderWidth: 1
+        }]
+    };
+
+    // Configurações do gráfico de rentabilidade por categoria
+    const rentabilityConfig = {
+        type: \'doughnut\',
+        data: rentabilityData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: \'right\',
+                    labels: {
+                        color: \'#333\'
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || \'\';
+                            if (label) {
+                                label += \': \';
+                            }
+                            if (context.parsed !== null) {
+                                label += context.parsed + \'%\';
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    // Renderizar o gráfico de rentabilidade por categoria
+    const rentabilityChart = new Chart(
+        document.getElementById(\'rentabilityChart\'),
+        rentabilityConfig
+    );
+
+    // Dados de exemplo para o gráfico de aportes (mini gráfico)
+    const contributionsData = {
+        labels: [\'Jan\', \'Fev\', \'Mar\', \'Abr\', \'Mai\', \'Jun\'],
+        datasets: [
+            {
+                label: \'Aportes (R$)\',
+                data: [5000, 6000, 4500, 5500, 7000, 4800],
+                backgroundColor: \'#0e74ff\',
+                borderColor: \'#0e74ff\',
+                tension: 0.3,
+                fill: false
+            },
+            {
+                label: \'Retiradas (R$)\',
+                data: [1000, 500, 0, 1200, 0, 800],
+                backgroundColor: \'#ff1744\',
+                borderColor: \'#ff1744\',
+                tension: 0.3,
+                fill: false
+            }
+        ]
+    };
+
+    // Configurações do gráfico de aportes
+    const contributionsConfig = {
+        type: \'line\',
+        data: contributionsData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: \'top\',
+                    labels: {
+                        color: \'#333\'
+                    }
+                },
+                tooltip: {
+                    mode: \'index\',
+                    intersect: false,
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: \'#e0e0e0\'
+                    }
+                }
+            }
+        }
+    };
+
+    // Renderizar o gráfico de aportes
+    const contributionsChart = new Chart(
+        document.getElementById(\'contributionsChart\'),
+        contributionsConfig
+    );
+</script>
+{% endblock conteudo %}

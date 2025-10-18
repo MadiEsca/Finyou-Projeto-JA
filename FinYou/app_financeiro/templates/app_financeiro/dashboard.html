@@ -1,33 +1,377 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
 
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dashboard</title>
-    <link rel="stylesheet" href="../styles/estilizacaoLogin.css">
+    <title>Meus Investimentos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href=" {% static "styles/dashboard.css" %} ">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
-
 <body>
 
     <header>
-        <div class="logo">
-            <img src="../assets/Logo_Finyou.png" alt="FinYou Logo" />
-            <h1>FinYou</h1>
-        </div>
+    <div class="logo">
+      <img src="{% static "/images/Logo_Finyou.png" %}" alt="FinYou Logo" />
+      <h1>FinYou</h1>
+    </div>
 
-        <nav>
-            <ul>
-                <li><a href="home.html">Início</a></li>
-                <li><a href="home.html">Sobre</a></li>
-                <li><a href="home.html">Serviços</a></li>
-                <li><a href="home.html">Planos</a></li>
-                <li><a href="home.html">Contato</a></li>
-                <li><a href="auxilhoFinyou.html">Suas Finanças</a></li>
-            </ul>
-        </nav>
+      <!--VERIFICAR SE O USUÁRIO ESTÁ CADASTRADO-->
+      <nav class="nav navbar">
+        <ul>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'rota_home' %}">Início</a></li>
+          <li><a href="{% url 'rota_home' %}">Sobre</a></li>
+          <li><a href="{% url 'rota_home' %}">Serviços</a></li>
+          <li><a href="{% url 'rota_home' %}">Planos</a></li>
+          <li><a href="{% url 'rota_home' %}">Contato</a></li>
+          <li><a href="{% url "rota_dashboard" %}">Dashboard</a></li>
+          <li><a href="{% url "rota_logout" %}">logout</a></li>
+          <li>
+            <a> seja bem vindo, {{ user.username }}! </a>
+          </li>
+          {% else %}
+          <li><a href="{% url 'rota_home' %}">Início</a></li>
+          <li><a href="{% url 'rota_home' %}">Sobre</a></li>
+          <li><a href="{% url 'rota_home' %}">Serviços</a></li>
+          <li><a href="{% url 'rota_home' %}">Planos</a></li>
+          <li><a href="{% url 'rota_home' %}">Contato</a></li>
+          <li><a href="{% url "rota_login" %}">Login</a></li>
+          <li>
+            <p> Que tal se cadastrar </p>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
     </header>
 
-</body>
+    <div class="dashboard-container">
+        <h1 class="dashboard-title">Meus Investimentos ›</h1>
+        
+        <div class="main-grid">
+            <!-- Gráfico Principal - Evolução do Patrimônio -->
+            <div class="main-chart-container">
+                <div class="chart-header">
+                    <div class="chart-icon-wrapper">
+                        <span class="portfolio-icon">💰</span>
+                    </div>
+                    <div class="chart-info">
+                        <div class="chart-title-row">
+                            <span class="chart-name">Patrimônio Total</span>
+                            <span class="badge">Últimos 12 meses</span>
+                            <span class="info-icon">ⓘ</span>
+                        </div>
+                        <div class="chart-value-row">
+                            <span class="chart-value">R$ 487.650,00</span>
+                            <span class="chart-change positive">+18,5%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="portfolioChart"></canvas>
+                </div>
+            </div>
 
+            <!-- Sidebar - Distribuição por Categoria -->
+            <div class="indices-sidebar">
+                <h3 class="sidebar-title">Distribuição de Ativos</h3>
+                <div class="indices-list">
+                    <div class="index-item">
+                        <div class="index-icon blue">RF</div>
+                        <div class="index-info">
+                            <div class="index-name">Renda Fixa</div>
+                            <div class="index-code">Tesouro, CDB, LCI</div>
+                        </div>
+                        <div class="index-values">
+                            <div class="index-value">R$ 195.060</div>
+                            <div class="index-change positive">40,0%</div>
+                        </div>
+                    </div>
+
+                    <div class="index-item">
+                        <div class="index-icon red">AÇ</div>
+                        <div class="index-info">
+                            <div class="index-name">Ações</div>
+                            <div class="index-code">Ações Nacionais</div>
+                        </div>
+                        <div class="index-values">
+                            <div class="index-value">R$ 136.709</div>
+                            <div class="index-change positive">28,0%</div>
+                        </div>
+                    </div>
+
+                    <div class="index-item">
+                        <div class="index-icon cyan">FI</div>
+                        <div class="index-info">
+                            <div class="index-name">Fundos Imobiliários</div>
+                            <div class="index-code">FIIs</div>
+                        </div>
+                        <div class="index-values">
+                            <div class="index-value">R$ 73.147</div>
+                            <div class="index-change positive">15,0%</div>
+                        </div>
+                    </div>
+
+                    <div class="index-item">
+                        <div class="index-icon navy">CR</div>
+                        <div class="index-info">
+                            <div class="index-name">Criptomoedas</div>
+                            <div class="index-code">BTC, ETH</div>
+                        </div>
+                        <div class="index-values">
+                            <div class="index-value">R$ 48.765</div>
+                            <div class="index-change positive">10,0%</div>
+                        </div>
+                    </div>
+
+                    <div class="index-item">
+                        <div class="index-icon dark-blue">EX</div>
+                        <div class="index-info">
+                            <div class="index-name">Ações Internacionais</div>
+                            <div class="index-code">ETFs, Stocks</div>
+                        </div>
+                        <div class="index-values">
+                            <div class="index-value">R$ 24.382</div>
+                            <div class="index-change positive">5,0%</div>
+                        </div>
+                    </div>
+
+                    <div class="index-item">
+                        <div class="index-icon purple">RE</div>
+                        <div class="index-info">
+                            <div class="index-name">Reserva de Emergência</div>
+                            <div class="index-code">Liquidez Diária</div>
+                        </div>
+                        <div class="index-values">
+                            <div class="index-value">R$ 9.587</div>
+                            <div class="index-change positive">2,0%</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="view-more">Ver detalhes de cada ativo ›</a>
+            </div>
+        </div>
+
+        <!-- Cards Inferiores -->
+        <div class="bottom-grid">
+            <!-- Rentabilidade por Categoria -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon crypto">📊</div>
+                    <div class="card-title-group">
+                        <span class="card-title">Rentabilidade por Categoria</span>
+                        <span class="info-icon">ⓘ</span>
+                    </div>
+                </div>
+                <div class="card-stats">
+                    <span class="card-value">Últimos 12 meses</span>
+                </div>
+                <div class="chart-mini-wrapper">
+                    <canvas id="rentabilityChart"></canvas>
+                </div>
+                <div class="crypto-dominance">
+                    <h4>Maiores Ganhos</h4>
+                    <div class="crypto-list">
+                        <div class="crypto-item">
+                            <div class="crypto-icon" style="background: #f7931a;">₿</div>
+                            <div class="crypto-info">
+                                <div class="crypto-name">Bitcoin</div>
+                                <div class="crypto-code">0.5 BTC</div>
+                            </div>
+                            <div class="crypto-values">
+                                <div class="crypto-value">R$ 27.800</div>
+                                <div class="crypto-change positive">+45,2%</div>
+                            </div>
+                        </div>
+                        <div class="crypto-item">
+                            <div class="crypto-icon" style="background: #00c853;">📈</div>
+                            <div class="crypto-info">
+                                <div class="crypto-name">PETR4</div>
+                                <div class="crypto-code">500 ações</div>
+                            </div>
+                            <div class="crypto-values">
+                                <div class="crypto-value">R$ 18.500</div>
+                                <div class="crypto-change positive">+32,8%</div>
+                            </div>
+                        </div>
+                        <div class="crypto-item">
+                            <div class="crypto-icon" style="background: #627eea;">Ξ</div>
+                            <div class="crypto-info">
+                                <div class="crypto-name">Ethereum</div>
+                                <div class="crypto-code">5 ETH</div>
+                            </div>
+                            <div class="crypto-values">
+                                <div class="crypto-value">R$ 20.965</div>
+                                <div class="crypto-change positive">+28,4%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="card-link">Ver todos os ativos ›</a>
+            </div>
+
+            <!-- Aportes e Retiradas -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon usd">💵</div>
+                    <div class="card-title-group">
+                        <span class="card-title">Movimentações Mensais</span>
+                        <span class="info-icon">ⓘ</span>
+                    </div>
+                </div>
+                <div class="card-stats">
+                    <span class="card-value">Aporte médio: R$ 5.200</span>
+                </div>
+                <div class="chart-mini-wrapper">
+                    <canvas id="contributionsChart"></canvas>
+                </div>
+
+                <div class="commodities-section">
+                    <h4 style="margin-bottom: 12px; font-size: 0.85rem; font-weight: 600;">Próximos Vencimentos</h4>
+                    <div class="commodity-item">
+                        <div class="commodity-icon" style="background: #0e74ff;">📅</div>
+                        <div class="commodity-info">
+                            <div class="commodity-name">Tesouro Selic 2027</div>
+                            <div class="commodity-code">Vencimento</div>
+                        </div>
+                        <div class="commodity-values">
+                            <div class="commodity-value">15/03/2027</div>
+                            <div class="commodity-change positive">R$ 35.000</div>
+                        </div>
+                    </div>
+
+                    <div class="commodity-item">
+                        <div class="commodity-icon" style="background: #00c853;">📅</div>
+                        <div class="commodity-info">
+                            <div class="commodity-name">CDB Banco XYZ</div>
+                            <div class="commodity-code">Vencimento</div>
+                        </div>
+                        <div class="commodity-values">
+                            <div class="commodity-value">20/08/2026</div>
+                            <div class="commodity-change positive">R$ 50.000</div>
+                        </div>
+                    </div>
+
+                    <div class="commodity-item">
+                        <div class="commodity-icon" style="background: #ff9800;">📅</div>
+                        <div class="commodity-info">
+                            <div class="commodity-name">LCI Imóveis</div>
+                            <div class="commodity-code">Vencimento</div>
+                        </div>
+                        <div class="commodity-values">
+                            <div class="commodity-value">10/11/2025</div>
+                            <div class="commodity-change positive">R$ 28.500</div>
+                        </div>
+                    </div>
+
+                    <div class="commodity-item">
+                        <div class="commodity-icon" style="background: #9c27b0;">📅</div>
+                        <div class="commodity-info">
+                            <div class="commodity-name">Tesouro IPCA+ 2030</div>
+                            <div class="commodity-code">Vencimento</div>
+                        </div>
+                        <div class="commodity-values">
+                            <div class="commodity-value">15/05/2030</div>
+                            <div class="commodity-change positive">R$ 45.000</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="card-link">Ver todos os vencimentos ›</a>
+            </div>
+
+            <!-- Metas e Projeções -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #9c27b0;">🎯</div>
+                    <div class="card-title-group">
+                        <span class="card-title">Metas e Projeções</span>
+                        <span class="info-icon">ⓘ</span>
+                    </div>
+                </div>
+                <div class="card-stats">
+                    <span class="card-value">Meta: R$ 1.000.000</span>
+                    <span class="card-change positive">48,8% alcançado</span>
+                </div>
+                <div class="chart-mini-wrapper">
+                    <canvas id="goalsChart"></canvas>
+                </div>
+
+                <div class="indicators-section">
+                    <h4>Projeção de Crescimento Anual</h4>
+                    <div class="bar-chart-wrapper">
+                        <canvas id="projectionChart"></canvas>
+                    </div>
+
+                    <h4 class="mt-20">Tempo Estimado para Meta</h4>
+                    <div class="interest-table">
+                        <div class="table-row">
+                            <div class="table-cell">Aporte Atual</div>
+                            <div class="table-cell">Rentabilidade</div>
+                            <div class="table-cell">Prazo Estimado</div>
+                        </div>
+                        <div class="table-row values">
+                            <div class="table-cell strong">R$ 5.200/mês</div>
+                            <div class="table-cell strong">12% a.a.</div>
+                            <div class="table-cell strong">6 anos e 4 meses</div>
+                        </div>
+                    </div>
+
+                    <div class="goals-list">
+                        <h4 class="mt-20">Objetivos</h4>
+                        <div class="goal-item">
+                            <div class="goal-info">
+                                <span class="goal-name">🏠 Comprar imóvel</span>
+                                <div class="goal-progress-bar">
+                                    <div class="goal-progress" style="width: 65%;"></div>
+                                </div>
+                            </div>
+                            <span class="goal-percent">65%</span>
+                        </div>
+                        <div class="goal-item">
+                            <div class="goal-info">
+                                <span class="goal-name">✈️ Viagem internacional</span>
+                                <div class="goal-progress-bar">
+                                    <div class="goal-progress" style="width: 100%; background: #00c853;"></div>
+                                </div>
+                            </div>
+                            <span class="goal-percent" style="color: #00c853;">100%</span>
+                        </div>
+                        <div class="goal-item">
+                            <div class="goal-info">
+                                <span class="goal-name">🎓 Reserva educação</span>
+                                <div class="goal-progress-bar">
+                                    <div class="goal-progress" style="width: 40%;"></div>
+                                </div>
+                            </div>
+                            <span class="goal-percent">40%</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="card-link">Ver todas as metas ›</a>
+            </div>
+        </div>
+    </div>
+    
+    
+    <footer>
+        <p>© 2025 FinYou - Todos os direitos reservados.</p>
+        <div class="redes-sociais">
+            <a href="#">
+                <img src="{% static "images/Logo_Facebook.png" %}" alt="Facebook">
+            </a>
+            <a href="#">
+                <img src="{% static "images/Logo_Instagram.png" %}" alt="Instagram">
+            </a>
+            <a href="#">
+                <img src="{% static "images/Logo_LinkedIn.png" %}" alt="LinkedIn">
+            </a>
+        </div>
+  </footer>
+
+    <script src=" {% static "scripts/newDashboard.js" %} "></script>
+</body>
 </html>

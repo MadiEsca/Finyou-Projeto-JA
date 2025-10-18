@@ -26,7 +26,9 @@ def home(request):
 
 def criarConta(request):
     if request.method == "GET":
-        return render(request, "app_financeiro/criar_conta.html", context={"Formulario_Criar_Conta": Formulario_Criar_Conta()},
+        return render(request, "app_financeiro/criar_conta.html", context={"Formulario_Criar_Conta": Formulario_Criar_Conta(),
+                                                                           "mensagem_2":"Preencha os campos abaixo para se cadastrar na FinYou."
+                                                                           },
         )
     else:
         form = Formulario_Criar_Conta(
@@ -41,9 +43,12 @@ def criarConta(request):
             # Verificando se o usuário já está cadastrado (com base no username e no email)
             user = User.objects.filter(username=username, email=email).exists()
             if user:
-                return HttpResponse(
-                    f"Usuario {username} já foi criado, entre em sua conta"
-                )
+                return render(request, "app_financeiro/login.html", {"Formulario_Login": Formulario_Login(), 
+                                                                     "mensagem_1":f"O usuario {username} já existe",
+                                                                     "mensagem_2":"Entre na sua conta Finyou"})
+                # return HttpResponse(
+                #     f"Usuario {username} já foi criado, entre em sua conta"
+                # )
             # Criando o Usuario
             else:
                 print("Usuario criado agora")
@@ -51,11 +56,15 @@ def criarConta(request):
                     username=username, email=email, password=password
                 )
                 user.save()
-                return HttpResponse(f"{username}, {email}, {password}")
+                return render(request, "app_financeiro/login.html", {"Formulario_Login": Formulario_Login(), 
+                                                                     "mensagem_1":"Usuario criado com sucesso",
+                                                                     "mensagem_2":"Entre na sua conta Finyou"})
 
 def login(request):
     if request.method == "GET":
-        return render(request, "app_financeiro/login.html", {"Formulario_Login": Formulario_Login()})
+        return render(request, "app_financeiro/login.html", {"Formulario_Login": Formulario_Login(), 
+                                                             "mensagem_1":"Bem vindo de volta!",
+                                                             "mensagem_2":"Entre na sua conta Finyou"})
 
     else:
         form = Formulario_Login(request.POST)  # Inicializa uma instancia do formulário com base nos dados passados pelo formulario
@@ -69,13 +78,26 @@ def login(request):
                 user = authenticate(username=username, password=password)
                 if user: #Verifica se o usuário foi autenticado
                     auth_login(request, user=user)
-                    return HttpResponse(f"Pode fazer login - O usuario {user} foi autenticado")
+                    return HttpResponseRedirect(reverse_lazy("rota_home"))
+                    #return HttpResponse(f"Pode fazer login - O usuario {user} foi autenticado")
                 else:
-                    return HttpResponse(f"Você não foi autenticado")
-        return HttpResponse("O usuário não existe, crie-o\n <a href=/criarConta/>Crie uma conta</a>")
+                    return render(request, "app_financeiro/login.html", {"Formulario_Login": Formulario_Login(), 
+                                                                         "mensagem_1":"Senha ou usuário incorretor",
+                                                                         "mensagem_2":"Redigite seu username e senha"})
+                    #return HttpResponse(f"Você não foi autenticado")
+                
+        return render(request, "app_financeiro/criar_conta.html", {"Formulario_Criar_Conta": Formulario_Criar_Conta(), 
+                                                                   "mensagem_2":"Parece que você ainda não tem uma conta, crie-a agora"})
+        #return render(request, "app_financeiro/login.html", {"Formulario_Login": Formulario_Login(), "mensagem_1":"Usuário inexistente", "mensagem_2":"Sua conta ainda não existe"})
+        #return HttpResponse("O usuário não existe, crie-o\n <a href=/criarConta/>Crie uma conta</a>")
 
 def recuperarSenha(request):
-    return render(request, "app_financeiro/recuperacao.html")
+    if request.method == "POST":
+        return render(request, "app_financeiro/login.html", {"Formulario_Login": Formulario_Login(), 
+                                                             "mensagem_1":"Email de recuperação enviado",
+                                                             "mensagem_2":"Redigite seu username e a nova senha"})
+    else:
+        return render(request, "app_financeiro/recuperacao.html")
 
 #===============================================
 # class loginTeste(LoginView):
@@ -100,7 +122,7 @@ def logout(request):
 @login_required(login_url="rota_login")
 def dashboard(request):
     #user = User.objects.get(username=username)
-    return render(request, "app_financeiro/auxilhoFinyou.html")
+    return render(request, "app_financeiro/dashboard.html")
 
 @login_required(login_url="rota_login")
 def pagamento(request):

@@ -11,7 +11,8 @@
       <h2>Recuperar senha</h2>
       <p>Digite o e-mail associado à sua conta e enviaremos um link para redefinir sua senha.</p>
 
-      <form class="recuperar-form" method="POST">
+      <form class="recuperar-form" method="POST" action="{% url "rota_recuperarSenha" %}">
+        {% csrf_token %}
         <input type="email" placeholder="Seu e-mail" required />
         <button type="submit">Enviar link de recuperação</button>
       </form>
