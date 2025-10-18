@@ -1,0 +1,88 @@
+{% extends "template.html" %}
+{% load static %}
+{% block titulo %}Home - FinYou{% endblock titulo %}
+
+{% block conteudo %}
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <h2>Transforme suas <span>Finanças</span> com a FinYou</h2>
+      <p>Soluções inteligentes para investir, economizar e crescer com segurança.</p>
+      <a href="#planos" class="botao">Conheça nossos planos</a>
+    </div>
+  </section>
+
+  <!-- ===== SOBRE ===== -->
+  <section id="sobre">
+    <h2>Sobre Nós</h2>
+    <p>A FinYou é uma plataforma moderna que ajuda você a planejar e alcançar seus objetivos financeiros com tecnologia e confiança.</p>
+  </section>
+
+  <!-- ===== SERVIÇOS ===== -->
+  <section id="servicos">
+    <h2>Nossos Serviços</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Consultoria Financeira</h3>
+        <p>Tenha um plano sob medida com acompanhamento profissional.</p>
+      </div>
+      <div class="card destaque" style="color: #f5f6fa;">
+        <h3>Investimentos Inteligentes</h3>
+        <p>Invista com segurança e retorno previsível através de tecnologia de ponta.</p>
+      </div>
+      <div class="card">
+        <h3>Controle de Gastos</h3>
+        <p>Organize suas finanças e veja seu dinheiro render mais a cada mês.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PLANOS ===== -->
+  <section id="planos">
+
+    {% if user.is_authenticated %}
+    <h1>Seja bem vindo {{ user }}</h1>
+    {% endif %}
+
+    <h2>Planos e Preços</h2>
+    
+    <!--Primeiro Card-->
+    <div class="cards">
+      <div class="card">
+        <h3>Básico</h3>
+        <p>Ideal para investidores iniciantes no controle financeiro.</p>
+        <p><strong>R$19,90/mês</strong></p>
+        <a href="{% url "rota_pagamento" %}" class="botao">Assinar</a>
+      </div>
+
+    <!--Segundo Card-->
+      <div class="card destaque" style="color: #f5f6fa;">
+        <h3>Premium</h3>
+        <p>O plano mais completo com suporte 24h e outras funcionalidades.</p>
+        <p><strong>R$49,90/mês</strong></p>
+        <a href="{% url "rota_pagamento" %}" class="botao">Assinar</a>
+      </div>
+
+    <!--Terceiro Card-->
+      <div class="card">
+        <h3>Empresarial</h3>
+        <p>Gestão financeira para pequenas e médias empresas.</p>
+        <p><strong>R$89,90/mês</strong></p>
+        <a href="{% url "rota_pagamento" %}" class="botao">Assinar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTATO ===== -->
+  <!--IMPLEMENTAR FUNCIONAMENTO-->
+  <section id="contato">
+    <h2>Fale Conosco</h2>
+    <form>
+      <input type="text" placeholder="Seu nome" required />
+      <input type="email" placeholder="Seu e-mail" required />
+      <textarea placeholder="Sua mensagem" rows="5" required></textarea>
+      <button type="submit">Enviar Mensagem</button>
+    </form>
+  </section>
+
+{% endblock conteudo %}

@@ -1,0 +1,41 @@
+{% extends 'template.html' %}
+{% load static %}
+{% block titulo %}Login{% endblock titulo %}
+{% block conteudo %}
+
+<!-- ===== LOGIN CONTEÚDO ===== -->
+<section class="login-section">
+  <div class="login-box">
+    <img src="{% static 'images/Logo_Finyou.png' %}" alt="Logo FinYou" class="login-logo" />
+
+    <h2>Bem-vindo de volta!</h2>
+    <p>Entre na sua conta FinYou</p>
+
+    <form class="login-form" method="POST" action="{% url "rota_login" %}">
+      {% csrf_token %}
+      <!--Implementar verificação dos campos e validação dos mesmos em caso de erro-->
+      {{ Formulario_Login }}
+
+      {% comment %} <input type="email" placeholder="Email" required />
+      <input type="password" placeholder="Senha" required /> 
+      {% endcomment %}
+      <button type="submit" class="botao">Entrar</button>
+
+      <div class="login-links">
+      <p>Não tem uma conta? <a href="{% url "rota_criarConta" %}">Criar conta</a></p>
+      <p>Esqueceu a senha? <a href="{% url "rota_recuperarSenha" %}">Recuperar senha</a></p>
+      </div>
+    </form>
+
+    <div class="login-social">
+      <p>Ou entre com</p>
+      <div class="social-icons">
+        <img src="{% static "images/Logo_Facebook.png" %}" alt="Facebook" />
+        <img src="{% static "images/Logo_Instagram.png" %}" alt="Instagram" />
+        <img src="{% static "images/Logo_LinkedIn.png" %}" alt="LinkedIn" />
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock conteudo %}

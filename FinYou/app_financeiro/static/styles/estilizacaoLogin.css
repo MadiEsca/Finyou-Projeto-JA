@@ -1,0 +1,723 @@
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* ===== CORES ===== */
+:root {
+    --azul-escuro: #1a3c8d;
+    --azul-claro: #0e74ff;
+    --dourado: #ffd700;
+    --branco: #ffffff;
+    --cinza-claro: #f5f6fa;
+}
+
+/* ===== BODY ===== */
+body {
+    background: radial-gradient(circle at top left, #ffffff, #c4d9fd);
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+}
+
+
+/* ===== HEADER ===== */
+.barra-navegacao {
+
+    /* configurar */
+
+}
+
+/* ===== HEADER FIXO ===== */
+header {
+    background-color: var(--branco);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    /* <-- fixo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+body {
+    padding-top: 100px;
+    /* espaço para o header fixo não cobrir o conteúdo */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.logo h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--azul-escuro);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--azul-escuro);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--dourado);
+}
+
+/* ===== HERO ===== */
+.hero {
+    background: linear-gradient(135deg, var(--azul-escuro), var(--azul-claro));
+    color: var(--branco);
+    text-align: center;
+    padding: 160px 20px 120px;
+    animation: gradientMove 10s ease infinite;
+    background-size: 200% 200%;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.hero-content h2 {
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+}
+
+.hero-content h2 span {
+    color: var(--dourado);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.botao {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 30px;
+    background-color: var(--branco);
+    color: var(--azul-escuro);
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.3s ease;
+    border: 1px solid black;
+}
+
+.botao:hover {
+    background-color: var(--dourado);
+    color: #000;
+    transform: scale(1.05);
+}
+
+/* ===== SEÇÕES ===== */
+section {
+    background-color: var(--branco);
+    width: 85%;
+    max-width: 1000px;
+    margin: 60px auto;
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+section h2 {
+    color: var(--azul-escuro);
+    margin-bottom: 25px;
+    font-size: 2rem;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.cards h3 {
+    font-weight: 600;
+}
+
+.card {
+    background: var(--cinza-claro);
+    padding: 25px;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid blue;
+}
+
+.destaque {
+    background: linear-gradient(135deg, var(--azul-claro), var(--azul-escuro));
+    color: var(--branco);
+}
+
+.destaque h3 {
+    background: linear-gradient(45deg, #b8860b, #ffcc00, #ffdf00, #b8860b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ===== FORM ===== */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+input,
+textarea {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    transition: 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--azul-claro);
+    box-shadow: 0 0 8px rgba(14, 116, 255, 0.4);
+}
+
+button {
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    font-weight: 600;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--azul-claro);
+    transform: scale(1.05);
+}
+
+/* ===== FOOTER ===== */
+footer {
+    background: linear-gradient(135deg, var(--azul-escuro), var(--azul-claro));
+    color: var(--branco);
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.redes-sociais img {
+    height: 28px;
+    margin: 10px;
+    filter: invert(1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.redes-sociais img:hover {
+    transform: scale(1.2);
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+    header {
+        /* display: none; Quando a tela chegar em determinado tamanho, ela desaparecerá */
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul {
+        /* display: none; Quando a tela chegar em determinado tamanho, ela desaparecerá */
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .hero-content h2 {
+        font-size: 2rem;
+    }
+
+    section {
+        width: 90%;
+        padding: 35px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h2 {
+        font-size: 1.6rem;
+    }
+
+    .botao {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+/* ===== LOGO + TEXTO ===== */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* diminui o espaço entre o ícone e o texto */
+}
+
+.logo img {
+    height: 45px;
+    /* ajuste conforme o tamanho desejado */
+    width: auto;
+    vertical-align: middle;
+}
+
+.logo a {
+    /*Ajustando alinhamento e configurando o bloco*/
+    display: flex;
+    align-content: start;
+
+    /*Configurando a exibição*/
+    text-decoration: none;
+}
+
+.logo h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--azul-escuro);
+    margin: 0;
+    /* remove espaçamento padrão do h1 */
+}
+
+/* ===== FOOTER ===== */
+footer {
+    background: linear-gradient(135deg, var(--azul-escuro), var(--azul-claro));
+    color: var(--branco);
+    /* muda o texto para dourado */
+    text-align: center;
+    padding: 40px 20px;
+    /* levemente maior */
+    font-weight: 500;
+}
+
+.redes-sociais img {
+    height: 38px;
+    /* aumenta o tamanho dos ícones */
+    margin: 15px;
+    filter: brightness(0) saturate(100%) invert(79%) sepia(68%) saturate(1965%) hue-rotate(3deg) brightness(103%) contrast(105%);
+    transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
+}
+
+/* Efeito dourado mais intenso ao passar o mouse */
+.redes-sociais img:hover {
+    transform: scale(1.25);
+    filter: brightness(1.2) saturate(150%) hue-rotate(10deg);
+}
+
+/* ===== LOGIN PAGE ===== */
+.login-section {
+    background: linear-gradient(135deg, var(--azul-escuro), var(--azul-claro));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 120px 20px 60px;
+}
+
+.login-box {
+    background-color: var(--branco);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    padding: 50px;
+    width: 100%;
+    max-width: 420px;
+}
+
+.login-logo {
+    height: 70px;
+    margin-bottom: 15px;
+}
+
+.login-box h2 {
+    color: var(--azul-escuro);
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.login-box p {
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-form input {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: 0.3s;
+    font-size: 1rem;
+}
+
+.login-form input:focus {
+    border-color: var(--azul-claro);
+    box-shadow: 0 0 8px rgba(14, 116, 255, 0.3);
+}
+
+.login-form button {
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    font-weight: 600;
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-form button:hover {
+    background-color: var(--dourado);
+    color: #000;
+    transform: scale(1.05);
+}
+
+.login-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.login-links a {
+    color: var(--azul-claro);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.login-links a:hover {
+    text-decoration: underline;
+}
+
+.login-social {
+    margin-top: 30px;
+}
+
+.login-social p {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.social-icons img {
+    height: 28px;
+    margin: 0 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.social-icons img:hover {
+    transform: scale(1.2);
+}
+
+/* ===== RESPONSIVO LOGIN ===== */
+@media (max-width: 480px) {
+    .login-box {
+        padding: 30px 20px;
+        /* menos padding em telas pequenas */
+    }
+
+    .login-logo {
+        height: 120px;
+    }
+
+    .login-box h2 {
+        font-size: 0.9rem;
+        /* título menor */
+    }
+
+    .login-form input {
+        font-size: 0.9rem;
+        /* texto dos inputs menor */
+    }
+
+    .login-form button {
+        padding: 10px;
+        /* botão um pouco menor */
+        font-size: 0.9rem;
+    }
+
+    .social-icons img {
+        height: 24px;
+        /* ícones sociais menores */
+        margin: 0 6px;
+    }
+}
+
+/* ===== RECUPERAR SENHA ===== */
+.recuperar-section {
+    background: linear-gradient(135deg, var(--azul-escuro), var(--azul-claro));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 120px 20px 60px;
+}
+
+.recuperar-box {
+    background-color: var(--branco);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    padding: 50px;
+    width: 100%;
+    max-width: 420px;
+}
+
+.recuperar-logo {
+    height: 70px;
+    margin-bottom: 15px;
+}
+
+.recuperar-box h2 {
+    color: var(--azul-escuro);
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.recuperar-box p {
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.recuperar-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.recuperar-form input {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: 0.3s;
+    font-size: 1rem;
+}
+
+.recuperar-form input:focus {
+    border-color: var(--azul-claro);
+    box-shadow: 0 0 8px rgba(14, 116, 255, 0.3);
+}
+
+.recuperar-form button {
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    font-weight: 600;
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.recuperar-form button:hover {
+    background-color: var(--dourado);
+    color: #000;
+    transform: scale(1.05);
+}
+
+.voltar-login a {
+    color: var(--azul-claro);
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 20px;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.voltar-login a:hover {
+    text-decoration: underline;
+}
+
+/* ===== RESPONSIVO RECUPERAR SENHA ===== */
+@media (max-width: 480px) {
+    .recuperar-box {
+        padding: 30px 20px;
+        /* menos padding em telas pequenas */
+    }
+
+    .recuperar-logo {
+        height: 120px;
+    }
+
+    .recuperar-box h2 {
+        font-size: 0.9rem;
+        /* título menor */
+    }
+
+    .recuperar-form input {
+        font-size: 0.9rem;
+        /* texto dos inputs menor */
+    }
+
+    .recuperar-form button {
+        padding: 10px;
+        /* botão um pouco menor */
+        font-size: 0.9rem;
+    }
+}
+
+/* ===== CADASTRO ===== */
+.cadastro-section {
+    background: linear-gradient(135deg, var(--azul-escuro), var(--azul-claro));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 120px 20px 60px;
+}
+
+.cadastro-box {
+    background-color: var(--branco);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    padding: 50px;
+    width: 100%;
+    max-width: 420px;
+}
+
+.cadastro-logo {
+    height: 70px;
+    margin-bottom: 15px;
+}
+
+.cadastro-box h2 {
+    color: var(--azul-escuro);
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.cadastro-box p {
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.cadastro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cadastro-form input {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: 0.3s;
+    font-size: 1rem;
+}
+
+.cadastro-form input:focus {
+    border-color: var(--azul-claro);
+    box-shadow: 0 0 8px rgba(14, 116, 255, 0.3);
+}
+
+.cadastro-form button {
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    font-weight: 600;
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.cadastro-form button:hover {
+    background-color: var(--dourado);
+    color: #000;
+    transform: scale(1.05);
+}
+
+.voltar-login {
+    margin-top: 20px;
+}
+
+.voltar-login a {
+    color: var(--azul-claro);
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.voltar-login a:hover {
+    text-decoration: underline;
+}
+
+/* ===== RESPONSIVO CADASTRO ===== */
+@media (max-width: 480px) {
+    .cadastro-box {
+        padding: 30px 20px;
+        /* menos padding em telas pequenas */
+    }
+
+    .cadastro-logo {
+        height: 120px;
+    }
+
+    .cadastro-box h2 {
+        font-size: 0.9rem;
+        /* título menor */
+    }
+
+    .cadastro-form input {
+        font-size: 0.9rem;
+        /* texto dos inputs menor */
+    }
+
+    .cadastro-form button {
+        padding: 10px;
+        /* botão um pouco menor */
+        font-size: 0.9rem;
+    }
+}

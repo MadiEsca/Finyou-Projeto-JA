@@ -1,0 +1,26 @@
+{% extends "template.html" %}
+{% load static %}
+{% block titulo %}Criar Conta{% endblock titulo %}
+
+<!-- ===== CONTEÚDO DE CADASTRO ===== -->
+{% block conteudo %}
+<section class="cadastro-section">
+    <div class="cadastro-box">
+      <img src="{% static "/images/Logo_Finyou.png" %}" alt="Logo FinYou" class="cadastro-logo" />
+
+      <h2>Criar nova conta</h2>
+      <p>Preencha os campos abaixo para se cadastrar na FinYou.</p>
+
+      <form class="cadastro-form" method="POST" action="{% url "rota_criarConta" %}" >
+        {% csrf_token %}
+        {{ Formulario_Criar_Conta }}
+        <input type="submit" value="Enviar">
+      </form>
+
+      <p class="voltar-login">
+      <p>Já tem uma conta? <a href="login.html">Entrar</a></p>
+      <a href="{% url "rota_login" %}">← Voltar para o login</a>
+      </p>
+    </div>
+  </section>
+{% endblock conteudo %}

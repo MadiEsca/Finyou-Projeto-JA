@@ -1,0 +1,24 @@
+{% extends "template.html" %}
+{% load static %}
+{% block titulo %}Recuperar Conta{% endblock titulo %}
+
+  {% block conteudo %}
+  <!-- ===== CONTEÚDO DE RECUPERAÇÃO ===== -->
+  <section class="recuperar-section">
+    <div class="recuperar-box">
+      <img src="/FinYou/Front-End-Finyou/assets/Logo_Finyou.png" alt="Logo FinYou" class="recuperar-logo" />
+
+      <h2>Recuperar senha</h2>
+      <p>Digite o e-mail associado à sua conta e enviaremos um link para redefinir sua senha.</p>
+
+      <form class="recuperar-form" method="POST">
+        <input type="email" placeholder="Seu e-mail" required />
+        <button type="submit">Enviar link de recuperação</button>
+      </form>
+
+      <p class="voltar-login">
+        <a href="{% url "rota_login" %}">← Voltar para o login</a>
+      </p>
+    </div>
+  </section>
+  {% endblock conteudo %}

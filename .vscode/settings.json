@@ -1,0 +1,12 @@
+{
+    "liveServer.settings.port": 5501,
+    "editor.formatOnSave": true,
+
+    //Configurando o Django dentro do VScode
+    "files.associations": {
+        "**/templates**/*.html": "django-html" //Qualquer arquivo .html dentro de qualquer pasta templates será tratado como um arquivo django-html
+    },
+    "emmet.includeLanguages": {
+        "django-html":"html"
+    }
+}

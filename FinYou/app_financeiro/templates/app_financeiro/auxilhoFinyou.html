@@ -1,0 +1,48 @@
+{% extends "template.html" %}
+{% load static %}
+
+{% block titulo %}Dashboard Financeiro{% endblock titulo %}
+{% block conteudo %}
+
+    <main class="dashboard">
+        <!-- FORMULÁRIO -->
+        <section class="formulario">
+            <h2>Adicionar valores</h2>
+            <label>Receita: <input type="number" id="input-receita" placeholder="Ex: 5100"></label>
+            <label>Despesa: <input type="number" id="input-despesa" placeholder="Ex: 4260"></label>
+            <label>Poupança: <input type="number" id="input-poupanca" placeholder="Ex: 1000"></label>
+            <button id="btn-atualizar">Atualizar Dados</button>
+        </section>
+
+    {% autoescape on %}
+        <!-- CARDS -->
+        <section class="resumo">
+            <div class="card receita">
+                <h3>Receitas</h3>
+                <p id="valor-receita">R$ 0,00</p>
+            </div>
+            <div class="card despesa">
+                <h3>Despesas</h3>
+                <p id="valor-despesa">R$ 0,00</p>
+            </div>
+            <div class="card lucro">
+                <h3>Lucro / Prejuízo</h3>
+                <p id="valor-lucro">R$ 0,00</p>
+            </div>
+            <div class="card poupanca">
+                <h3>Poupança</h3>
+                <p id="valor-poupanca">R$ 0,00</p>
+            </div>
+        </section>
+
+        <!-- GRÁFICOS -->
+        <section class="graficos">
+            <canvas id="graficoReceitas"></canvas>
+            <canvas id="graficoDespesas"></canvas>
+        </section>
+    {% endautoescape %}
+        
+    </main>
+
+    <script src="{% static "scripts/dashboard.js" %}"></script> 
+    {% endblock conteudo %}

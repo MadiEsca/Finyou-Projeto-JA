@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block titulo %}{% endblock titulo %}</title>
+  <link rel="stylesheet" href="{% static 'styles/estilizacao.css' %}" />
+  <link rel="icon" type="image/png" href="{% static '/images/Logo_Finyou.png' %}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="logo">
+      <img src="{% static "/images/Logo_Finyou.png" %}" alt="FinYou Logo" />
+      <h1>FinYou</h1>
+    </div>
+
+      <!--VERIFICAR SE O USUÁRIO ESTÁ CADASTRADO-->
+      <nav class="nav navbar">
+        <ul>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'rota_home' %}">Início</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#planos">Planos</a></li>
+          <li><a href="#contato">Contato</a></li>
+          <li><a href="{% url "rota_dashboard" %}">Dashboard</a></li>
+          <li><a href="{% url "rota_logout" %}">logout</a></li>
+          <li>
+            <a> seja bem vindo, {{ user.username }}! </a>
+          </li>
+          {% else %}
+          <li><a href="{% url 'rota_home' %}">Início</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#planos">Planos</a></li>
+          <li><a href="#contato">Contato</a></li>
+          <li><a href="{% url "rota_login" %}">Login</a></li>
+          <li>
+            <p> Que tal se cadastrar </p>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </header> 
+    
+<!-- ===== Conteúdo carregado dinamicamente ===== -->
+{% block conteudo %}
+
+{% endblock conteudo %}
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>© 2025 FinYou - Todos os direitos reservados.</p>
+    <div class="redes-sociais">
+      <img src="{% static "images/Logo_Facebook.png" %}" alt="Facebook">
+      <img src="{% static "images/Logo_Instagram.png" %}" alt="Instagram">
+      <img src="{% static "images/Logo_LinkedIn.png" %}" alt="LinkedIn">
+    </div>
+  </footer>
+</body>
+</html>
